@@ -21,7 +21,7 @@ git clone https://github.com/JeanCSF/teste_backend_l5.git
 composer install
 ```
 
-3. Em seu SGDB de preferência rode o script para criação do banco de dados contido no arquivo `l5_api.sql`, caso queira utilizar as migrations do codeigniter crie um banco de dados chamado `l5_api` e execute os seguintes comandos no terminal:
+3. No SGDB de sua preferência rode o script para criação do banco de dados contido no arquivo `l5_api.sql`, caso queira utilizar as migrations do codeigniter crie um banco de dados chamado `l5_api` e execute os seguintes comandos no terminal:
 
 ```bash
 php spark migrate # Criação das tabelas
@@ -41,7 +41,7 @@ php -S localhost:8080 # O número de porta pode ser alterado
 A aplicação estará disponível em `http://localhost:8080`.
 
 ### Documentação
-#### Esta aplicação conta com uma documentação interativa, para acessar a documentação é necessário acessar `http://localhost:8080` e efetuar o login, caso tenha utilizado o script SQL para criação do banco de dados, ou as migrations e o seed do codeigniter, um usuário padrão já foi criado com o nome `admin` e a senha `admin`. Caso contrario é possível criar um novo usuário clicando no botão `Cadastrar`, ou utilizar o endpoint `POST /api/signup`. Fique a vontade para testar a API por aqui ou utilizando o cliente de API de sua preferência, abaixo deixo em detalhes os endpoints disponíveis:
+Esta aplicação conta com uma documentação interativa, para acessar a documentação é necessário acessar `http://localhost:8080` e efetuar o login, caso tenha utilizado o script SQL para criação do banco de dados, ou as migrations e o seed do codeigniter, um usuário padrão já foi criado com o nome `admin` e a senha `admin`. Caso contrario é possível criar um novo usuário clicando no botão `Cadastrar`, ou utilizar o endpoint `POST /api/signup`. Fique a vontade para testar a API por aqui ou utilizando o cliente de API de sua preferência, abaixo deixo em detalhes os endpoints disponíveis:
 
 ### Endpoint: Criação de Usuário
 
@@ -119,8 +119,9 @@ Se a autenticação for bem-sucedida, a resposta será um objeto JSON com as seg
 }
 ```
 
-### Observação:
-Foi necessário criar um sistema de login simples para implementar o token JWT.
+### Observações:
+### *Foi necessário criar um sistema de login simples para implementar o token JWT.*
+### *Todos os endpoints do CRUD exigem autenticação, utilize o enpoint de login para obter o token*
 
 ### Endpoint: Listagem de Registros
 
