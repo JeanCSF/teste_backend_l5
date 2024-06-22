@@ -11,7 +11,6 @@
         const ui = SwaggerUIBundle({
             url: '/docs.json',
             dom_id: '#swagger-ui',
-            deepLinking: true,
             presets: [
                 SwaggerUIBundle.presets.apis,
                 SwaggerUIStandalonePreset

@@ -12,6 +12,127 @@
     }
   ],
   "paths": {
+    "/api/signup": {
+      "post": {
+        "tags": [
+          "Endpoints"
+        ],
+        "summary": "Endpoint para criar um novo de usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "usuario": {
+                    "type": "string",
+                    "example": "admin"
+                  },
+                  "senha": {
+                    "type": "string",
+                    "example": "admin"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 201
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Usuário criado com sucesso"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados de entrada inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 400
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Verifique os dados fornecidos"
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "usuario": {
+                            "type": "string",
+                            "example": "Usuário já existente"
+                          },
+                          "senha": {
+                            "type": "string",
+                            "example": "Nenhuma senha informada"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Erro interno no servidor"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/login": {
       "post": {
         "tags": [
@@ -176,7 +297,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Rota para determinar o tipo de registro a ser listado",
+            "description": "Rota para determinar o tipo de registro a ser listado (clientes, produtos, pedidos)",
             "example": "clientes"
           }
         ],
@@ -377,7 +498,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Rota para determinar o tipo de registro a ser criado",
+            "description": "Rota para determinar o tipo de registro a ser criado (cliente, produto, pedido)",
             "example": "cliente"
           }
         ],
@@ -556,7 +677,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Rota para determinar o tipo de registro a ser lido",
+            "description": "Rota para determinar o tipo de registro a ser lido (cliente, produto, pedido)",
             "example": "cliente"
           }
         ],
@@ -762,7 +883,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Rota para determinar o tipo de registro a ser atualizado",
+            "description": "Rota para determinar o tipo de registro a ser atualizado (cliente, produto, pedido)",
             "example": "cliente"
           }
         ],
@@ -943,7 +1064,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Rota para determinar o tipo de registro a ser excluído",
+            "description": "Rota para determinar o tipo de registro a ser excluído (cliente, produto, pedido)",
             "example": "cliente"
           },
           {
@@ -974,6 +1095,31 @@
                         "mensagem": {
                           "type": "string",
                           "example": "Registro excluído com sucesso"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 400
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Erro de validação: Não é possível excluir este registro, pois existem pedidos associados a ele."
                         }
                       }
                     }

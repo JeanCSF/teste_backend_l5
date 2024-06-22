@@ -8,8 +8,9 @@
         <div class="mb-3">
             <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha">
         </div>
-        <div class="text-end">
-            <button class="btn btn-primary" type="submit">Entrar</button>
+        <div class="d-flex justify-content-between">
+            <a href="/signup" class="btn btn-primary">Cadastrar</a>
+            <button class="btn btn-success" type="submit">Entrar</button>
         </div>
     </form>
     <?= $this->endSection() ?>

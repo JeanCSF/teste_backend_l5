@@ -7,7 +7,9 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->get('home', 'Home::docs');
+$routes->get('signup', 'Home::register');
 $routes->group('api', function (RouteCollection $routes) {
+    $routes->post('signup', 'Api::signup');
     $routes->post('login', 'Api::login');
     $routes->get('logout', 'Api::logout');
 

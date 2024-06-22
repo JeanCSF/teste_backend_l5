@@ -17,4 +17,9 @@ class Home extends BaseController
     {
         return view('docs');
     }
+
+    public function register(): string
+    {
+        return view('signup');
+    }
 }

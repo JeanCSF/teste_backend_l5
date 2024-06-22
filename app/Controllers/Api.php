@@ -56,7 +56,7 @@ class Api extends ResourceController
         $payload = [
             'iss' => 'localhost',
             'iat' => time(),
-            'exp' => time() + 3600,
+            'exp' => time() + 86400,
             'usuario' => $usuario['usuario']
         ];
 
@@ -109,6 +109,22 @@ class Api extends ResourceController
         $this->session = \Config\Services::session();
     }
 
+    public function signup()
+    {
+        $post = $this->request->getJSON();
+        try {
+            if ($this->usuariosModel->criar($post)) {
+                return $this->gerarResponse(201, 'Usuario criado com sucesso');
+            }
+
+            $erros = $this->usuariosModel->errors();
+            if (!empty($erros)) {
+                return $this->gerarResponse(400, 'Verifique os dados fornecidos', $erros);
+            }
+        } catch (Exception $e) {
+            return $this->gerarResponse(500, $e->getMessage());
+        }
+    }
     public function login()
     {
         $post = $this->request->getJSON();
@@ -172,7 +188,7 @@ class Api extends ResourceController
         try {
             $totalRegistros = $model->countAllResults();
             if ($page > ceil($totalRegistros / $limit)) {
-                return $this->gerarResponse(404, 'Página solicitada não encontrada');
+                return $this->gerarResponse(404, 'Nenhum registro encontrado ou página solicitada não existe');
             }
 
             $response = $model->getAll($limit, $page, $q);
@@ -338,8 +354,14 @@ class Api extends ResourceController
             if (!$model->find($id)) {
                 return $this->gerarResponse(404, 'Registro não encontrado');
             }
+            $pedidosCliente = $this->pedidosModel->where('id_cliente', $id)->countAllResults();
+            $pedidosProduto = $this->pedidosModel->where('id_produto', $id)->countAllResults();
+            if ($pedidosCliente > 0 || $pedidosProduto > 0) {
+                return $this->gerarResponse(400, 'Não é possível excluir este registro, pois existem pedidos associados a ele.');
+            }
 
             $model->delete($id);
+
             return $this->gerarResponse(200, 'Registro excluído com sucesso');
         } catch (Exception $e) {
             return $this->gerarResponse(500, $e->getMessage());

@@ -32,7 +32,15 @@ class UsuariosModel extends Model
         'usuario' => 'required|min_length[3]|max_length[50]|is_unique[usuarios.usuario]',
         'senha' => 'required|min_length[3]|max_length[255]'
     ];
-    protected $validationMessages   = [];
+    protected $validationMessages   = [
+        'usuario' => [
+            'required' => 'O campo nome de usuário deve ser informado',
+            'is_unique' => 'Este nome de usuário ja existe'
+        ],
+        'senha' => [
+            'required' => 'O campo senha deve ser informado'
+        ]
+    ];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 
@@ -46,6 +54,12 @@ class UsuariosModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function criar(object $post)
+    {
+        $post->senha = password_hash($post->senha, PASSWORD_BCRYPT);
+        return $this->save($post);
+    }
 
     public function autenticar(object $post)
     {

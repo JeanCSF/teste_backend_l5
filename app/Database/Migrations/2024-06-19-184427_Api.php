@@ -127,16 +127,16 @@ class Api extends Migration
             ]
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('id_cliente', 'clientes', 'id', 'NO ACTION', 'NO ACTION');
-        $this->forge->addForeignKey('id_produto', 'produtos', 'id', 'NO ACTION', 'NO ACTION');
+        $this->forge->addForeignKey('id_produto', 'produtos', 'id', 'NO ACTION', 'RESTRICT');
+        $this->forge->addForeignKey('id_cliente', 'clientes', 'id', 'NO ACTION', 'RESTRICT');
         $this->forge->createTable('pedidos', true, ['ENGINE' => 'InnoDB']);
     }
 
     public function down()
     {
-        $this->forge->dropTable('clientes');
-        $this->forge->dropTable('produtos');
         $this->forge->dropTable('pedidos');
+        $this->forge->dropTable('produtos');
+        $this->forge->dropTable('clientes');
         $this->forge->dropTable('usuarios');
     }
 }
