@@ -1,0 +1,1064 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API teste backend L5",
+    "description": "API de cadastro de pedidos de compra",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Endpoints",
+      "description": "Endpoints da API"
+    }
+  ],
+  "paths": {
+    "/api/login": {
+      "post": {
+        "tags": [
+          "Endpoints"
+        ],
+        "summary": "Endpoint para autenticação de usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "usuario": {
+                    "type": "string",
+                    "example": "admin"
+                  },
+                  "senha": {
+                    "type": "string",
+                    "example": "admin"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login efetuado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Sucesso: Login efetuado com sucesso"
+                        }
+                      }
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados de entrada inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 400
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Verifique os dados fornecidos"
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "usuario": {
+                            "type": "string",
+                            "example": "Nenhum usuário informado"
+                          },
+                          "senha": {
+                            "type": "string",
+                            "example": "Nenhuma senha informada"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário ou senha inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 401
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Usuário ou senha inválidos"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Erro interno no servidor"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/{rota}": {
+      "post": {
+        "tags": [
+          "Endpoints"
+        ],
+        "summary": "Endpoint para listar registros",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "rota",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Rota para determinar o tipo de registro a ser listado",
+            "example": "clientes"
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "parametros": {
+                    "type": "object",
+                    "properties": {
+                      "limit": {
+                        "type": "integer",
+                        "example": 10
+                      },
+                      "page": {
+                        "type": "integer",
+                        "example": 1
+                      },
+                      "q": {
+                        "type": "string",
+                        "example": "exemplo_busca"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dados retornados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Dados retornados com sucesso"
+                        }
+                      }
+                    },
+                    "retorno": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "1"
+                          },
+                          "nome_razao": {
+                            "type": "string",
+                            "example": "João Silva"
+                          },
+                          "cpf_cnpj": {
+                            "type": "string",
+                            "example": "12345678901"
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "example": "2024-06-21 16:57:15"
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          }
+                        }
+                      }
+                    },
+                    "paginacao": {
+                      "type": "object",
+                      "properties": {
+                        "pagina": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "total_registros": {
+                          "type": "integer",
+                          "example": 10
+                        },
+                        "total_paginas": {
+                          "type": "integer",
+                          "example": 10
+                        },
+                        "ultima_pagina": {
+                          "type": "boolean",
+                          "example": false
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado - Token de autenticação inválido ou ausente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 401
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Token de autenticação inválido ou ausente"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum registro encontrado ou página não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 404
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Nenhum registro encontrado ou página não encontrada"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Erro interno no servidor"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/create/{rota}": {
+      "post": {
+        "tags": [
+          "Endpoints"
+        ],
+        "summary": "Endpoint para criar um novo registro",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "rota",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Rota para determinar o tipo de registro a ser criado",
+            "example": "cliente"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "parametros": {
+                    "type": "object",
+                    "example": {
+                      "nome_razao": "Empresa ABC Ltda",
+                      "cpf_cnpj": "12345678000190"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Registro criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 201
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Registro criado com sucesso"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados de entrada inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 400
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Verifique os dados fornecidos"
+                        },
+                        "erros": {
+                          "type": "object",
+                          "properties": {
+                            "cpf_cnpj": {
+                              "type": "string",
+                              "example": "O campo CPF/CNPJ deve ser informado"
+                            },
+                            "nome_razao": {
+                              "type": "string",
+                              "example": "O campo nome ou razão social deve ser informado"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado - Token de autenticação inválido ou ausente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 401
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Token de autenticação inválido ou ausente"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum registro encontrado ou página não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 404
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Nenhum registro encontrado ou página não encontrada"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Erro interno no servidor"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/read/{rota}": {
+      "post": {
+        "tags": [
+          "Endpoints"
+        ],
+        "summary": "Endpoint para ler um registro específico",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "rota",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Rota para determinar o tipo de registro a ser lido",
+            "example": "cliente"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "parametros": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dados retornados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Dados retornados com sucesso"
+                        }
+                      }
+                    },
+                    "retorno": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "1"
+                          },
+                          "nome_razao": {
+                            "type": "string",
+                            "example": "João Silva"
+                          },
+                          "cpf_cnpj": {
+                            "type": "string",
+                            "example": "12345678901"
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "example": "2024-06-21 16:57:15"
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados de entrada inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 400
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Verifique os dados fornecidos"
+                        },
+                        "erros": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "Nenhum ID informado"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado - Token de autenticação inválido ou ausente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 401
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Token de autenticação inválido ou ausente"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum registro encontrado ou página não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 404
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Nenhum registro encontrado ou página não encontrada"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Erro interno no servidor"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/update/{rota}": {
+      "post": {
+        "tags": [
+          "Endpoints"
+        ],
+        "summary": "Endpoint para atualizar um registro específico",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "rota",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Rota para determinar o tipo de registro a ser atualizado",
+            "example": "cliente"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "parametros": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "1"
+                      },
+                      "nome_razao": {
+                        "type": "string",
+                        "example": "João Pereira"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dados atualizados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Registro atualizado com sucesso"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados de entrada inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 400
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Verifique os dados fornecidos"
+                        },
+                        "erros": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "Nenhum ID informado"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado - Token de autenticação inválido ou ausente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 401
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Token de autenticação inválido ou ausente"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum registro encontrado ou página não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 404
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Nenhum registro encontrado ou página não encontrada"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Erro interno no servidor"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/delete/{rota}/{id}": {
+      "delete": {
+        "tags": [
+          "Endpoints"
+        ],
+        "summary": "Endpoint para excluir um registro específico",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "rota",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Rota para determinar o tipo de registro a ser excluído",
+            "example": "cliente"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do registro a ser excluído"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Registro excluído com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Registro excluído com sucesso"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado - Token de autenticação inválido ou ausente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 401
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Token de autenticação inválido ou ausente"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum registro encontrado ou página não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 404
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Nenhum registro encontrado ou página não encontrada"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cabecalho": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "mensagem": {
+                          "type": "string",
+                          "example": "Erro interno no servidor"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
